@@ -1,0 +1,50 @@
+解题思路
+解法一：递归
+利用两个指针交换两个节点；
+交换后的第二节点的下一节点指向后续递归的头；
+第二节点的下一节点指向第一节点；
+返回第二节点，交换后为第一节点。
+
+代码
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def swapPairs(self, head):
+        if not head or not head.next:
+            return head
+        first = head
+        second = head.next
+        first.next = self.swapPairs(second.next)
+        second.next = first
+        return second
+解法二：迭代
+交换第一二节点；
+遍历后续节点并交换；
+
+代码
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def swapPairs(self, head):
+        dummy = ListNode(-1)
+        dummy.next = head
+        pre = dummy
+        while head and head.next:   #空节点或者单节点退出
+            first = head
+            second = head.next
+            pre.next = second       #交换两节点
+            first.next = second.next
+            second.next = first
+
+            pre = first             #继续遍历后续节点
+            head = first.next
+        return dummy.next
